@@ -4,12 +4,9 @@
     <string name="search_hint">Search books here&#8230;</string>
     <string name="button_search">Search</string>
     <string name="img_info">Image</string>
-
     <string name="empty">No Results Found</string>
     <string name="search_for_books">Get Book by Searching</string>
-    <string name="empty_icon_description">A crying face</string>
-    <string name="no_connection_message">No connection</string>
-    <string name="no_connection_icon_description">A disabled Wi-fi signal</string>
+    <string name="no_connection_message">No internet connection</string>
 
     <!-- Settings Menu Item [CHAR LIMIT=NONE] -->
     <string name="settings_menu_item">Settings</string>
