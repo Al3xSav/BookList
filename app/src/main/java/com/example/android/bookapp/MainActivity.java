@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         // Hide the keyboard
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_main);
-
         ImageButton imageButton = (ImageButton) findViewById(R.id.search_button);
         assert imageButton != null;
         emptyView = (TextView) findViewById(R.id.empty_view);
@@ -56,35 +55,45 @@ public class MainActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText input = (EditText) findViewById(R.id.input);
-                String inputQuery = input.getText().toString();
-                inputQuery = inputQuery.replace(" ", "+");
-                urlString = GOOGLE_REQUEST_URL + inputQuery + ORDER_NEWEST;
-                Log.v("URL:", urlString);
-                if (inputQuery != null) {
-                    input.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            input.setText("");
-                        }
-                    });
+                if (haveNetworkConnection()) {
+                    final EditText input = (EditText) findViewById(R.id.input);
+                    String inputQuery = input.getText().toString();
+                    inputQuery = inputQuery.replace(" ", "+");
+                    urlString = GOOGLE_REQUEST_URL + inputQuery + ORDER_NEWEST;
+                    Log.v("URL:", urlString);
+                    if (inputQuery != null) {
+                        input.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                input.setText("");
+                            }
+                        });
+                    }
+                    new ProcessJSON().execute(urlString);
                 }
-                new ProcessJSON().execute(urlString);
             }
         });
-
         // Get a reference to the ConnectivityManager to check state of network connectivity
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         // Get details on the currently active default data network
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         // If there is a network connection, fetch data
         if (networkInfo == null) {
             // Otherwise, display error
-            // First, hide loading indicator so error message will be visible
             // Update empty state with no connection error message
             emptyView.setText(R.string.no_connection_message);
         }
+    }
+
+    private boolean haveNetworkConnection() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        if (activeNetwork == null) { // disconnected from the internet
+            Toast.makeText(this, getResources().getString(R.string.lost_connection_message), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -97,7 +106,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(MainActivity.this, "Loading Books...", Toast.LENGTH_SHORT).show();
+            if (haveNetworkConnection()) {
+                Toast.makeText(MainActivity.this, "Loading Books...", Toast.LENGTH_SHORT).show();
+            }
         }
 
         protected String doInBackground(String... strings) {
