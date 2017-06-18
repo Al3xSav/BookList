@@ -30,18 +30,16 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int BOOK_LOADER_ID = 1;
     private static final String GOOGLE_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=";
     private static final String ORDER_NEWEST = "&orderBy=newest";
-    //private static final String API_KEY = "&key=AIzaSyDywPkt3dZacJouLdSSfe_iOHe6WrwVdWQ";
-    ListView list;
-    public TextView emptyView;
-    private static String urlString;
     //JSON Node Names
     private static final String TAG_TITLE = "title";
     private static final String TAG_AUTHORS = "authors";
     private static final String TAG_URL = "url";
-
+    private static String urlString;
+    public TextView emptyView;
+    //private static final String API_KEY = "&key=AIzaSyDywPkt3dZacJouLdSSfe_iOHe6WrwVdWQ";
+    ListView list;
     ArrayList<HashMap<String, String>> bookList = new ArrayList<>();
 
     @Override
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_main);
 
-        ImageButton imageButton = (ImageButton ) findViewById(R.id.search_button);
+        ImageButton imageButton = (ImageButton) findViewById(R.id.search_button);
         assert imageButton != null;
         emptyView = (TextView) findViewById(R.id.empty_view);
         emptyView.setText(getResources().getString(R.string.search_for_books));
@@ -60,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final EditText input = (EditText) findViewById(R.id.input);
                 String inputQuery = input.getText().toString();
-                inputQuery = inputQuery.replace(" ","+");
+                inputQuery = inputQuery.replace(" ", "+");
                 urlString = GOOGLE_REQUEST_URL + inputQuery + ORDER_NEWEST;
-                Log.v("URL:",urlString);
+                Log.v("URL:", urlString);
                 if (inputQuery != null) {
                     input.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -78,10 +76,8 @@ public class MainActivity extends AppCompatActivity {
         // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
-
         // Get details on the currently active default data network
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
         // If there is a network connection, fetch data
         if (networkInfo == null) {
             // Otherwise, display error
@@ -89,7 +85,12 @@ public class MainActivity extends AppCompatActivity {
             // Update empty state with no connection error message
             emptyView.setText(R.string.no_connection_message);
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
     private class ProcessJSON extends AsyncTask<String, Void, String> {
@@ -105,24 +106,23 @@ public class MainActivity extends AppCompatActivity {
 
             HTTPDataHandler handler = new HTTPDataHandler();
             stream = handler.GetHTTPData(urlString);
-
             // Return the data from specified url
             return stream;
         }
 
         protected void onPostExecute(String stream) {
             list = (ListView) findViewById(R.id.list);
+            list.setEmptyView(list);
             if (stream != null) {
                 try {
                     // Get the full HTTP Data as JSONObject
                     JSONObject reader = new JSONObject(stream);
                     int totalItems = reader.getInt("totalItems");
-                    if (totalItems == 0){
+                    if (totalItems == 0) {
                         list.setVisibility(View.INVISIBLE);
                         emptyView.setVisibility(View.VISIBLE);
                         emptyView.setText(getResources().getString(R.string.empty));
-                    }
-                    else {
+                    } else {
                         emptyView.setVisibility(View.INVISIBLE);
                         // Get the JSONArray weather
                         JSONArray bookArray = reader.getJSONArray("items");
@@ -159,21 +159,6 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                             }
-
-                            // Image Links
-                            JSONObject bookImageLinks = null;
-                            try {
-                                bookImageLinks = bookVolumeInfo.getJSONObject("imageLinks");
-                            } catch (JSONException ignored){
-                            }
-                            // Convert the image link to a string
-                            String bookSmallThumbnail;
-                            if ( bookImageLinks == null){
-                                bookSmallThumbnail = "null";
-                            }else{
-                                bookSmallThumbnail  = bookImageLinks.getString("smallThumbnail");
-                            }
-
                             JSONObject bookAccessInfo = bookObject.getJSONObject("accessInfo");
                             String bookUrlLinks = bookAccessInfo.getString("webReaderLink");
 
@@ -182,19 +167,17 @@ public class MainActivity extends AppCompatActivity {
                             Log.v(TAG_URL, bookUrlLinks);
 
                             // Adding value HashMap key => value
-
                             HashMap<String, String> map = new HashMap<>();
                             map.put(TAG_TITLE, bookTitle);
                             map.put(TAG_AUTHORS, bookAuthorsString);
                             map.put(TAG_URL, bookUrlLinks);
-
                             bookList.add(map);
 
                             ListAdapter adapter = new SimpleAdapter(MainActivity.this,
                                     bookList,
                                     R.layout.list,
                                     new String[]{TAG_TITLE, TAG_AUTHORS, TAG_URL},
-                                    new int[]{ R.id.bookTitle, R.id.bookAuthors}
+                                    new int[]{R.id.bookTitle, R.id.bookAuthors}
                             );
 
                             list.setAdapter(adapter);
@@ -211,18 +194,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     // process other data as this way..............
-                }catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
 
                 }
-
             } // if statement end
         } // onPostExecute() end
     } // ProcessJSON class end
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 }

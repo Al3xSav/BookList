@@ -12,23 +12,24 @@ import java.net.URL;
 
 public class HTTPDataHandler {
 
-    private static String inputStream = null;
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     private static final String LOG_TAG = HTTPDataHandler.class.getSimpleName();
+    private static String inputStream = null;
 
-    public HTTPDataHandler(){
+    public HTTPDataHandler() {
     }
 
-    public String GetHTTPData(String urlString){
+    public String GetHTTPData(String urlString) {
 
         URL url;
         HttpURLConnection urlConnection = null;
-        try{
+        try {
             url = new URL(urlString);
             urlConnection = (HttpURLConnection) url.openConnection();
             // Check the connection status
-            if(urlConnection.getResponseCode() == 200)
-            {
+            if (urlConnection.getResponseCode() == 200) {
                 // if response code = 200 ok
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -46,9 +47,9 @@ public class HTTPDataHandler {
             } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             Log.e(LOG_TAG, "Problem retrieving the book JSON results.", e);
-        }finally {
+        } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }

@@ -5,19 +5,19 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-        <TextView
-            android:id="@+id/bookTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColorBook"
-            android:textSize="18sp" />
+    <TextView
+        android:id="@+id/bookTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorBook"
+        android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/bookAuthors"
-            android:layout_marginTop="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColorAuthor"
-            android:textSize="15sp"
-            android:textStyle="italic" />
+    <TextView
+        android:id="@+id/bookAuthors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/textColorAuthor"
+        android:textSize="15sp"
+        android:textStyle="italic" />
 </LinearLayout>
