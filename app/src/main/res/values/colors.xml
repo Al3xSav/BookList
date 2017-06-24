@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2B3D4D</color>
-    <color name="colorPrimaryDark">#23303D</color>
-    <color name="colorAccent">#10CAC9</color>
-    <color name="textColorBook">#000000</color>
-    <color name="textColorAuthor">#7c7f81</color>
-    <color name="book_search_text">#E8EAF6</color>
-    <color name="book_search_hint">#9FA8DA</color>
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#00ACC1</color>
+    <color name="colorAccent">#18FFFF</color>
+    <color name="colorSection">#00008B</color>
+    <color name="colorTitle">#000000</color>
+    <color name="colorType">#B8860B</color>
+    <color name="colorDate">#A9A9A9</color>
 </resources>

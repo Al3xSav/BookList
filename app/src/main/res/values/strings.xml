@@ -1,42 +1,13 @@
 <resources>
-    <string name="app_name">Book List</string>
-    <string name="settings_title">Book Settings</string>
-    <string name="search_hint">Search books here&#8230;</string>
-    <string name="button_search">Search</string>
-    <string name="img_info">Image</string>
-    <string name="empty">No Results Found</string>
-    <string name="search_for_books">Get Book by Searching</string>
-    <string name="no_connection_message">No internet connection</string>
-    <string name="lost_connection_message">Connection has been lost</string>
-
-    <!-- Settings Menu Item [CHAR LIMIT=NONE] -->
-    <string name="settings_menu_item">Settings</string>
-
-    <!-- Strings For Title Preference [CHAR LIMIT=30] -->
-    <string name="settings_az_title_label">A-Z</string>
-    <string name="settings_az_title_key">a_z</string>
-    <string name="settings_az_title_default">Default</string>
-
-    <!-- Strings For Author Preference [CHAR LIMIT=30] -->
-    <string name="settings_az_author_label">A-Z</string>
-    <string name="settings_az_author_key">a_z</string>
-    <string name="settings_az_author_default">Default</string>
-
-    <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
-    <string name="settings_order_by_label">Order By</string>
-    <string name="settings_order_by_key">order_by</string>
-    <string name="settings_order_by_default">@string/settings_order_by_title_value</string>
-    <string name="settings_order_by_author">@string/settings_order_by_author_value</string>
-
-    <!-- Label for order-by option [CHAR LIMIT=20] -->
-    <string name="settings_order_by_title_label">Title</string>
-    <string name="settings_order_by_title_value">title</string>
-
-    <!-- Label for order-by option [CHAR LIMIT=20] -->
-    <string name="settings_order_by_author_label">Author</string>
-    <string name="settings_order_by_author_value">author</string>
-
-    <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
-    <string name="settings_order_by_most_recent_label">Most Recent</string>
-    <string name="settings_order_by_most_recent_value">time</string>
+    <string name="app_name">Guardian News</string>
+    <string name="empty_text">Oops! There is no internet connection</string>
+    <string name="nothing_text">There is nothing here &#8234;</string>
+    <string name="img_info">News Image</string>
+    <string name="section">News Section</string>
+    <string name="title">News Title</string>
+    <string name="type_label">Type: </string>
+    <string name="type">News</string>
+    <string name="date_label">Date: </string>
+    <string name="date">201X-MM-DD T hh:mm:ssz</string>
+    <string name="menu_search">Search</string>
 </resources>
